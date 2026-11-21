@@ -110,3 +110,16 @@ if [ -n "$WIFI_DEV" ]; then
   sudo nmcli connection modify Hotspot connection.autoconnect-priority 100
   sudo nmcli connection modify Hotspot 802-11-wireless.powersave 2
 fi
+
+echo "=== 8. Touch 'N' Stars Patch: Unbeschnittenes 4:3 PHD2-Vorschaubild ==="
+python3 -c '
+import glob
+old = "S=i(()=>u.value?{top:`80px`,height:`calc(100% - 80px)`}:{top:`0`,height:`100%`})"
+new = "S=i(()=>u.value?{top:`80px`,height:`calc(100% - 80px - var(--above-statusbar, 0px) - var(--status-panel-height, 260px) - 1rem)`}:{top:`0`,height:`calc(100% - var(--status-panel-height, 240px) - 1rem)`})"
+for p in glob.glob("/home/hase/.local/share/NINA/Plugins/*/Touch-N-Stars/app/assets/GuidingPage-*.js"):
+    s = open(p).read()
+    if old in s:
+        open(p + ".bak", "w").write(s)
+        open(p, "w").write(s.replace(old, new, 1))
+        print("Patch angewendet auf:", p)
+'
