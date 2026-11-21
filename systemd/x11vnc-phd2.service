@@ -1,0 +1,15 @@
+[Unit]
+Description=x11vnc for PHD2 Xvfb Display
+After=phd2.service
+Requires=phd2.service
+
+[Service]
+Type=simple
+User=hase
+ExecStartPre=/bin/sh -c 'for i in $(seq 1 15); do [ -f /tmp/xvfb-phd2.auth ] && exit 0; sleep 1; done; exit 1'
+ExecStart=/usr/bin/x11vnc -display :99 -auth /tmp/xvfb-phd2.auth -rfbport 5901 -passwd 1234 -noxdamage -shared -forever
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
