@@ -1,0 +1,19 @@
+[Unit]
+Description=PHD2 Guiding Daemon (Headless + VNC)
+Before=pins.service
+After=network.target
+
+[Service]
+Type=simple
+User=hase
+ExecStartPre=-/bin/rm -f /tmp/*phd2* /tmp/*PHD2* /home/hase/phd2.* /home/hase/.PHDGuidingV2-instance*
+ExecStart=/usr/bin/xvfb-run -a -s "-screen 0 1024x768x24" /usr/bin/phd2
+ExecStartPost=/bin/sh -c 'sleep 4 && echo "{\"method\": \"set_connected\", \"params\": [true], \"id\": 1}" | nc -w 2 127.0.0.1 4400 || true'
+ExecStartPost=/bin/sh -c 'XAUTH=$(ps aux | grep -o "/tmp/xvfb-run[^ ]*/Xauthority" | head -n 1); /usr/bin/x11vnc -display :99 -auth "$XAUTH" -rfbport 5901 -passwd hase -forever -bg'
+ExecStopPost=-/usr/bin/pkill -f "x11vnc.*5901"
+Restart=always
+RestartSec=3
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

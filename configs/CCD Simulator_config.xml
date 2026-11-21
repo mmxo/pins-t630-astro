@@ -1,0 +1,353 @@
+<INDIDriver>
+    <newSwitchVector device="CCD Simulator" name="DEBUG">
+        <oneSwitch name="ENABLE">
+Off
+        </oneSwitch>
+        <oneSwitch name="DISABLE">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newNumberVector device="CCD Simulator" name="POLLING_PERIOD">
+        <oneNumber name="PERIOD_MS">
+1000
+        </oneNumber>
+    </newNumberVector>
+    <newSwitchVector device="CCD Simulator" name="DEBUG_LEVEL">
+        <oneSwitch name="DBG_ERROR">
+On
+        </oneSwitch>
+        <oneSwitch name="DBG_WARNING">
+On
+        </oneSwitch>
+        <oneSwitch name="DBG_SESSION">
+On
+        </oneSwitch>
+        <oneSwitch name="DBG_DEBUG">
+Off
+        </oneSwitch>
+        <oneSwitch name="DBG_EXTRA_1">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="LOGGING_LEVEL">
+        <oneSwitch name="LOG_ERROR">
+On
+        </oneSwitch>
+        <oneSwitch name="LOG_WARNING">
+On
+        </oneSwitch>
+        <oneSwitch name="LOG_SESSION">
+On
+        </oneSwitch>
+        <oneSwitch name="LOG_DEBUG">
+Off
+        </oneSwitch>
+        <oneSwitch name="LOG_EXTRA_1">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="LOG_OUTPUT">
+        <oneSwitch name="CLIENT_DEBUG">
+On
+        </oneSwitch>
+        <oneSwitch name="FILE_DEBUG">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newTextVector device="CCD Simulator" name="ACTIVE_DEVICES">
+        <oneText name="ACTIVE_TELESCOPE">
+Telescope Simulator
+        </oneText>
+        <oneText name="ACTIVE_ROTATOR">
+Rotator Simulator
+        </oneText>
+        <oneText name="ACTIVE_FOCUSER">
+Focuser Simulator
+        </oneText>
+        <oneText name="ACTIVE_FILTER">
+CCD Simulator
+        </oneText>
+        <oneText name="ACTIVE_SKYQUALITY">
+SQM
+        </oneText>
+    </newTextVector>
+    <newSwitchVector device="CCD Simulator" name="UPLOAD_MODE">
+        <oneSwitch name="UPLOAD_CLIENT">
+On
+        </oneSwitch>
+        <oneSwitch name="UPLOAD_LOCAL">
+Off
+        </oneSwitch>
+        <oneSwitch name="UPLOAD_BOTH">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newTextVector device="CCD Simulator" name="UPLOAD_SETTINGS">
+        <oneText name="UPLOAD_DIR">
+/home/hase
+        </oneText>
+        <oneText name="UPLOAD_PREFIX">
+IMAGE_XXX
+        </oneText>
+    </newTextVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_FAST_TOGGLE">
+        <oneSwitch name="INDI_ENABLED">
+Off
+        </oneSwitch>
+        <oneSwitch name="INDI_DISABLED">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_COMPRESSION">
+        <oneSwitch name="INDI_ENABLED">
+Off
+        </oneSwitch>
+        <oneSwitch name="INDI_DISABLED">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_CAPTURE_FORMAT">
+        <oneSwitch name="INDI_MONO">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_TRANSFER_FORMAT">
+        <oneSwitch name="FORMAT_FITS">
+On
+        </oneSwitch>
+        <oneSwitch name="FORMAT_NATIVE">
+Off
+        </oneSwitch>
+        <oneSwitch name="FORMAT_XISF">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newNumberVector device="CCD Simulator" name="CCD_TEMP_RAMP">
+        <oneNumber name="RAMP_SLOPE">
+0
+        </oneNumber>
+        <oneNumber name="RAMP_THRESHOLD">
+0.2000000000000000111
+        </oneNumber>
+    </newNumberVector>
+    <newSwitchVector device="CCD Simulator" name="GUIDER_COMPRESSION">
+        <oneSwitch name="INDI_ENABLED">
+Off
+        </oneSwitch>
+        <oneSwitch name="INDI_DISABLED">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newNumberVector device="CCD Simulator" name="GUIDER_BINNING">
+        <oneNumber name="HOR_BIN">
+1
+        </oneNumber>
+        <oneNumber name="VER_BIN">
+1
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="CCD_FRAME">
+        <oneNumber name="X">
+0
+        </oneNumber>
+        <oneNumber name="Y">
+0
+        </oneNumber>
+        <oneNumber name="WIDTH">
+3008
+        </oneNumber>
+        <oneNumber name="HEIGHT">
+3008
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="CCD_BINNING">
+        <oneNumber name="HOR_BIN">
+1
+        </oneNumber>
+        <oneNumber name="VER_BIN">
+1
+        </oneNumber>
+    </newNumberVector>
+    <newTextVector device="CCD Simulator" name="CCD_CFA">
+        <oneText name="CFA_OFFSET_X">
+0
+        </oneText>
+        <oneText name="CFA_OFFSET_Y">
+0
+        </oneText>
+        <oneText name="CFA_TYPE">
+RGGB
+        </oneText>
+    </newTextVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_STREAM_ENCODER">
+        <oneSwitch name="RAW">
+On
+        </oneSwitch>
+        <oneSwitch name="MJPEG">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newTextVector device="CCD Simulator" name="RECORD_FILE">
+        <oneText name="RECORD_FILE_DIR">
+/home/hase/Videos/indi__D_
+        </oneText>
+        <oneText name="RECORD_FILE_NAME">
+indi_record__T_
+        </oneText>
+    </newTextVector>
+    <newNumberVector device="CCD Simulator" name="RECORD_OPTIONS">
+        <oneNumber name="RECORD_DURATION">
+1
+        </oneNumber>
+        <oneNumber name="RECORD_FRAME_TOTAL">
+30
+        </oneNumber>
+    </newNumberVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_STREAM_RECORDER">
+        <oneSwitch name="SER">
+On
+        </oneSwitch>
+    </newSwitchVector>
+    <newNumberVector device="CCD Simulator" name="LIMITS">
+        <oneNumber name="LIMITS_BUFFER_MAX">
+512
+        </oneNumber>
+        <oneNumber name="LIMITS_PREVIEW_FPS">
+10
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="SCOPE_INFO">
+        <oneNumber name="FOCAL_LENGTH">
+0
+        </oneNumber>
+        <oneNumber name="APERTURE">
+0
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="FILTER_SLOT">
+        <oneNumber name="FILTER_SLOT_VALUE">
+1
+        </oneNumber>
+    </newNumberVector>
+    <newTextVector device="CCD Simulator" name="FILTER_NAME">
+        <oneText name="FILTER_SLOT_NAME_1">
+Red
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_2">
+Green
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_3">
+Blue
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_4">
+H_Alpha
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_5">
+SII
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_6">
+OIII
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_7">
+LPR
+        </oneText>
+        <oneText name="FILTER_SLOT_NAME_8">
+Luminance
+        </oneText>
+    </newTextVector>
+    <newNumberVector device="CCD Simulator" name="SIMULATOR_SETTINGS">
+        <oneNumber name="SIM_XRES">
+3008
+        </oneNumber>
+        <oneNumber name="SIM_YRES">
+3008
+        </oneNumber>
+        <oneNumber name="SIM_XSIZE">
+3.7599999999999997868
+        </oneNumber>
+        <oneNumber name="SIM_YSIZE">
+3.7599999999999997868
+        </oneNumber>
+        <oneNumber name="SIM_MAXVAL">
+65000
+        </oneNumber>
+        <oneNumber name="SIM_SATURATION">
+1
+        </oneNumber>
+        <oneNumber name="SIM_LIMITINGMAG">
+19
+        </oneNumber>
+        <oneNumber name="SIM_NOISE">
+10
+        </oneNumber>
+        <oneNumber name="SIM_SKYGLOW">
+19.5
+        </oneNumber>
+        <oneNumber name="SIM_OAGOFFSET">
+0
+        </oneNumber>
+        <oneNumber name="SIM_POLAR">
+0
+        </oneNumber>
+        <oneNumber name="SIM_POLARDRIFT">
+0
+        </oneNumber>
+        <oneNumber name="SIM_PEPERIOD">
+0
+        </oneNumber>
+        <oneNumber name="SIM_PEMAX">
+0
+        </oneNumber>
+        <oneNumber name="SIM_TIME_FACTOR">
+1
+        </oneNumber>
+        <oneNumber name="SIM_ROTATION">
+0
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="CCD_GAIN">
+        <oneNumber name="GAIN">
+222
+        </oneNumber>
+    </newNumberVector>
+    <newNumberVector device="CCD Simulator" name="CCD_OFFSET">
+        <oneNumber name="OFFSET">
+10
+        </oneNumber>
+    </newNumberVector>
+    <newTextVector device="CCD Simulator" name="CCD_DIRECTORY_LOCATION">
+        <oneText name="LOCATION">
+      /home/hase/test-fits
+        </oneText>
+    </newTextVector>
+    <newSwitchVector device="CCD Simulator" name="CCD_RESOLUTION">
+        <oneSwitch name="1280 x 1024">
+On
+        </oneSwitch>
+        <oneSwitch name="6000 x 4000">
+Off
+        </oneSwitch>
+        <oneSwitch name="Custom">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newSwitchVector device="CCD Simulator" name="SIMULATE_BAYER">
+        <oneSwitch name="INDI_ENABLED">
+On
+        </oneSwitch>
+        <oneSwitch name="INDI_DISABLED">
+Off
+        </oneSwitch>
+    </newSwitchVector>
+    <newNumberVector device="CCD Simulator" name="SIM_FOCUSING">
+        <oneNumber name="SIM_FOCUS_POSITION">
+36700
+        </oneNumber>
+        <oneNumber name="SIM_FOCUS_MAX">
+100000
+        </oneNumber>
+        <oneNumber name="SIM_SEEING">
+3.5
+        </oneNumber>
+    </newNumberVector>
+</INDIDriver>

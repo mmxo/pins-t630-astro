@@ -1,0 +1,296 @@
+<INDIDriver>
+<newSwitchVector device='SVBONY CCD SV605CC' name='DEBUG'>
+  <oneSwitch name='ENABLE'>
+      On
+  </oneSwitch>
+  <oneSwitch name='DISABLE'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='POLLING_PERIOD'>
+  <oneNumber name='PERIOD_MS'>
+      1000
+  </oneNumber>
+</newNumberVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='DEBUG_LEVEL'>
+  <oneSwitch name='DBG_ERROR'>
+      On
+  </oneSwitch>
+  <oneSwitch name='DBG_WARNING'>
+      On
+  </oneSwitch>
+  <oneSwitch name='DBG_SESSION'>
+      On
+  </oneSwitch>
+  <oneSwitch name='DBG_DEBUG'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='DBG_EXTRA_1'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='LOGGING_LEVEL'>
+  <oneSwitch name='LOG_ERROR'>
+      On
+  </oneSwitch>
+  <oneSwitch name='LOG_WARNING'>
+      On
+  </oneSwitch>
+  <oneSwitch name='LOG_SESSION'>
+      On
+  </oneSwitch>
+  <oneSwitch name='LOG_DEBUG'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='LOG_EXTRA_1'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='LOG_OUTPUT'>
+  <oneSwitch name='CLIENT_DEBUG'>
+      On
+  </oneSwitch>
+  <oneSwitch name='FILE_DEBUG'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newTextVector device='SVBONY CCD SV605CC' name='ACTIVE_DEVICES'>
+  <oneText name='ACTIVE_TELESCOPE'>
+      Telescope Simulator
+  </oneText>
+  <oneText name='ACTIVE_ROTATOR'>
+      Rotator Simulator
+  </oneText>
+  <oneText name='ACTIVE_FOCUSER'>
+      Focuser Simulator
+  </oneText>
+  <oneText name='ACTIVE_FILTER'>
+      CCD Simulator
+  </oneText>
+  <oneText name='ACTIVE_SKYQUALITY'>
+      SQM
+  </oneText>
+</newTextVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='UPLOAD_MODE'>
+  <oneSwitch name='UPLOAD_CLIENT'>
+      On
+  </oneSwitch>
+  <oneSwitch name='UPLOAD_LOCAL'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='UPLOAD_BOTH'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newTextVector device='SVBONY CCD SV605CC' name='UPLOAD_SETTINGS'>
+  <oneText name='UPLOAD_DIR'>
+      /home/hase
+  </oneText>
+  <oneText name='UPLOAD_PREFIX'>
+      IMAGE_XXX
+  </oneText>
+</newTextVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_FAST_TOGGLE'>
+  <oneSwitch name='INDI_ENABLED'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='INDI_DISABLED'>
+      On
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_COMPRESSION'>
+  <oneSwitch name='INDI_ENABLED'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='INDI_DISABLED'>
+      On
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_CAPTURE_FORMAT'>
+  <oneSwitch name='SVB_IMG_RAW8'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_RAW16'>
+      On
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_Y8'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_RGB24'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_TRANSFER_FORMAT'>
+  <oneSwitch name='FORMAT_FITS'>
+      On
+  </oneSwitch>
+  <oneSwitch name='FORMAT_NATIVE'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='FORMAT_XISF'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='CCD_TEMP_RAMP'>
+  <oneNumber name='RAMP_SLOPE'>
+      0
+  </oneNumber>
+  <oneNumber name='RAMP_THRESHOLD'>
+      0.2000000000000000111
+  </oneNumber>
+</newNumberVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='CCD_FRAME'>
+  <oneNumber name='X'>
+      0
+  </oneNumber>
+  <oneNumber name='Y'>
+      0
+  </oneNumber>
+  <oneNumber name='WIDTH'>
+      3008
+  </oneNumber>
+  <oneNumber name='HEIGHT'>
+      3008
+  </oneNumber>
+</newNumberVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='CCD_BINNING'>
+  <oneNumber name='HOR_BIN'>
+      1
+  </oneNumber>
+  <oneNumber name='VER_BIN'>
+      1
+  </oneNumber>
+</newNumberVector>
+<newTextVector device='SVBONY CCD SV605CC' name='CCD_CFA'>
+  <oneText name='CFA_OFFSET_X'>
+      0
+  </oneText>
+  <oneText name='CFA_OFFSET_Y'>
+      0
+  </oneText>
+  <oneText name='CFA_TYPE'>
+      GRBG
+  </oneText>
+</newTextVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_STREAM_ENCODER'>
+  <oneSwitch name='RAW'>
+      On
+  </oneSwitch>
+  <oneSwitch name='MJPEG'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newTextVector device='SVBONY CCD SV605CC' name='RECORD_FILE'>
+  <oneText name='RECORD_FILE_DIR'>
+      /home/hase/Videos/indi__D_
+  </oneText>
+  <oneText name='RECORD_FILE_NAME'>
+      indi_record__T_
+  </oneText>
+</newTextVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='RECORD_OPTIONS'>
+  <oneNumber name='RECORD_DURATION'>
+      1
+  </oneNumber>
+  <oneNumber name='RECORD_FRAME_TOTAL'>
+      30
+  </oneNumber>
+</newNumberVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_STREAM_RECORDER'>
+  <oneSwitch name='SER'>
+      On
+  </oneSwitch>
+</newSwitchVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='LIMITS'>
+  <oneNumber name='LIMITS_BUFFER_MAX'>
+      512
+  </oneNumber>
+  <oneNumber name='LIMITS_PREVIEW_FPS'>
+      10
+  </oneNumber>
+</newNumberVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='SCOPE_INFO'>
+  <oneNumber name='FOCAL_LENGTH'>
+      0
+  </oneNumber>
+  <oneNumber name='APERTURE'>
+      0
+  </oneNumber>
+</newNumberVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_COOLER'>
+  <oneSwitch name='COOLER_ON'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='COOLER_OFF'>
+      On
+  </oneSwitch>
+</newSwitchVector>
+<newNumberVector device='SVBONY CCD SV605CC' name='CCD_CONTROLS'>
+  <oneNumber name='Gain'>
+      0
+  </oneNumber>
+  <oneNumber name='Contrast'>
+      50
+  </oneNumber>
+  <oneNumber name='WB_R'>
+      220
+  </oneNumber>
+  <oneNumber name='WB_G'>
+      128
+  </oneNumber>
+  <oneNumber name='WB_B'>
+      227
+  </oneNumber>
+  <oneNumber name='Gamma'>
+      100
+  </oneNumber>
+  <oneNumber name='Frame speed'>
+      2
+  </oneNumber>
+  <oneNumber name='Offset'>
+      0
+  </oneNumber>
+  <oneNumber name='Auto exposure target'>
+      100
+  </oneNumber>
+  <oneNumber name='Bad pixel correction'>
+      1
+  </oneNumber>
+  <oneNumber name='Bad pixel correction threshold'>
+      60
+  </oneNumber>
+</newNumberVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_CONTROLS_MODE'>
+  <oneSwitch name='AUTO_WB_R'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='AUTO_WB_G'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='AUTO_WB_B'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='FLIP'>
+  <oneSwitch name='FLIP_HORIZONTAL'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='FLIP_VERTICAL'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+<newSwitchVector device='SVBONY CCD SV605CC' name='CCD_VIDEO_FORMAT'>
+  <oneSwitch name='SVB_IMG_RAW8'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_RAW16'>
+      On
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_Y8'>
+      Off
+  </oneSwitch>
+  <oneSwitch name='SVB_IMG_RGB24'>
+      Off
+  </oneSwitch>
+</newSwitchVector>
+</INDIDriver>
