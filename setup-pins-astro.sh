@@ -15,11 +15,11 @@ sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-
    xvfb x11vnc matchbox-window-manager netcat-openbsd \
   libcfitsio-dev libnova-dev libusb-1.0-0-dev
 
+printf "Package: dotnet* aspnet* netstandard*\nPin: origin \"packages.microsoft.com\"\nPin-Priority: 1001\n" | sudo tee /etc/apt/preferences.d/99-microsoft-dotnet.pref > /dev/null
 echo "=== 2. PINS-Basis-Installation (falls noch nicht vorhanden) ==="
 if [ ! -f "$HOME/pins/NINA.dll" ]; then
   [ ! -d "$HOME/pins-src" ] && git clone https://github.com/nitr57/pins.git "$HOME/pins-src"
   export PATH="$HOME/.dotnet:$PATH"
-  python3 -c 'import json; g="/home/hase/pins-src/global.json"; d=json.load(open(g)); d["sdk"]["version"]="10.0.100"; d["sdk"]["rollForward"]="latestFeature"; json.dump(d,open(g,"w"),indent=2)'
   chmod +x "$HOME/pins-src/build-and-install-pins-x64.sh"
   cd "$HOME/pins-src"
   ./build-and-install-pins-x64.sh
