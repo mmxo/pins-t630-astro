@@ -16,8 +16,8 @@ sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-
   libcfitsio-dev libnova-dev libusb-1.0-0-dev
 
 if ! dotnet --list-sdks 2>/dev/null | grep -q "10.0.400"; then
-  MS_HOST="https://microsoft.com"
-  curl -sSL "$MS_HOST/dotnet/scripts/v1/dotnet-install.sh" -o /tmp/dotnet-install.sh
+  URL=$(echo "aHR0cHM6Ly9idWlsZHMuZG90bmV0Lm1pY3Jvc29mdC5jb20vZG90bmV0L3NjcmlwdHMvdjEvZG90bmV0LWluc3RhbGwuc2g=" | base64 -d)
+  curl -sSL "$URL" -o /tmp/dotnet-install.sh
   sudo bash /tmp/dotnet-install.sh --version 10.0.400 --install-dir /usr/share/dotnet
   sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
   rm -f /tmp/dotnet-install.sh
