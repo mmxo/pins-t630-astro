@@ -155,6 +155,15 @@ for p in glob.glob("/home/hase/.local/share/NINA/Plugins/*/Touch-N-Stars/app/ass
         print("Patch angewendet auf:", p)
 '
 
+echo "=== N.I.N.A. Northern Sky Offline Sky Map Cache (1.4 GB) laden ==="
+mkdir -p "$HOME/.local/share/NINA/FramingAssistantCache"
+if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 500 ]; then
+  SKY_URL="https://nighttime-imaging.eu"
+  curl -fL --progress-bar "$SKY_URL" -o /tmp/nina-northern-sky.zip && \
+  unzip -oq /tmp/nina-northern-sky.zip -d "$HOME/.local/share/NINA/FramingAssistantCache/" && \
+  rm -f /tmp/nina-northern-sky.zip
+fi
+
 echo "=== 10. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
 WIFI_DEV=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi" {print $1; exit}')
 if [ -n "$WIFI_DEV" ]; then
