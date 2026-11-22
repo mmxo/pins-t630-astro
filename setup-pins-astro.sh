@@ -173,6 +173,7 @@ if [ ! -f /opt/astap/astap ] || [ -z "$(ls /opt/astap/*.290 2>/dev/null)" ]; the
   curl -fL --progress-bar "$ASTAP_BASE/star_databases/d50_star_database.deb/download" -o /tmp/d50_star_database.deb && \
   (sudo dpkg -i /tmp/astap_amd64.deb /tmp/d50_star_database.deb || sudo apt-get install -f -y) && \
   rm -f /tmp/astap_amd64.deb /tmp/d50_star_database.deb
+  sudo ln -sf /opt/astap/astap_cli /usr/local/bin/astap_cli
 fi
 
 echo "=== 10. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
