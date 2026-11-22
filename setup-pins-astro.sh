@@ -15,7 +15,13 @@ sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-
    xvfb x11vnc matchbox-window-manager netcat-openbsd \
   libcfitsio-dev libnova-dev libusb-1.0-0-dev
 
-printf "Package: dotnet* aspnet* netstandard*\nPin: origin \"packages.microsoft.com\"\nPin-Priority: 1001\n" | sudo tee /etc/apt/preferences.d/99-microsoft-dotnet.pref > /dev/null
+if ! dotnet --list-sdks 2>/dev/null | grep -q "10.0.400"; then
+  MS_HOST="https://microsoft.com"
+  curl -sSL "$MS_HOST/dotnet/scripts/v1/dotnet-install.sh" -o /tmp/dotnet-install.sh
+  sudo bash /tmp/dotnet-install.sh --version 10.0.400 --install-dir /usr/share/dotnet
+  sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
+  rm -f /tmp/dotnet-install.sh
+fi
 echo "=== 2. PINS-Basis-Installation (falls noch nicht vorhanden) ==="
 if [ ! -f "$HOME/pins/NINA.dll" ]; then
   [ ! -d "$HOME/pins-src" ] && git clone https://github.com/nitr57/pins.git "$HOME/pins-src"
