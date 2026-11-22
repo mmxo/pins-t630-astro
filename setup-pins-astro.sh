@@ -80,7 +80,7 @@ sudo chmod +x /usr/bin/indiserver
 cat << 'WRAP' | sudo tee /usr/bin/indi_simulator_ccd > /dev/null
 #!/bin/bash
 export LD_PRELOAD=/home/hase/pins/libXISF.so.0.2.13
-(for i in $(seq 1 120); do indi_getprop "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED" >/dev/null 2>&1 && indi_setprop "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED=On" >/dev/null 2>&1 && break; sleep 1; done) &
+(for i in $(seq 1 120); do [ "$(indi_getprop -1 "CCD Simulator.CONNECTION.CONNECT" 2>/dev/null)" = "On" ] && sleep 1 && indi_setprop "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED=On" >/dev/null 2>&1 && break; sleep 1; done) &
 exec /usr/bin/indi_simulator_ccd.bin "$@"
 WRAP
 sudo chmod +x /usr/bin/indi_simulator_ccd
