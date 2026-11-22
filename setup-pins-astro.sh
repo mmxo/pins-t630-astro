@@ -12,7 +12,7 @@ sudo apt update
 sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-build \
   libtesseract-dev libleptonica-dev indi-bin    \
    xvfb x11vnc matchbox-window-manager netcat-openbsd \
-  libcfitsio-dev libnova-dev libusb-1.0-0-dev
+  libcfitsio-dev libnova-dev libusb-1.0-0-dev libopencv-dev
 
 if ! dotnet --list-sdks 2>/dev/null | grep -q "10.0.400"; then
   URL=$(echo "aHR0cHM6Ly9idWlsZHMuZG90bmV0Lm1pY3Jvc29mdC5jb20vZG90bmV0L3NjcmlwdHMvdjEvZG90bmV0LWluc3RhbGwuc2g=" | base64 -d)
@@ -60,12 +60,14 @@ dotnet publish NINA/NINA.csproj -c Release -r linux-x64 --no-build -o "$HOME/pin
 dotnet build NINA.INDI/NINA.INDI.csproj -c Release -o "$HOME/pins/"
 find "$HOME/.local/share/NINA/Plugins" -name "NINA.INDI.dll" -exec cp -f "$HOME/pins/NINA.INDI.dll" {} \;
 
-if [ -d "$HOME/pins-src/artifacts/src/opencvsharp/src" ]; then
-  cmake -S "$HOME/pins-src/artifacts/src/opencvsharp/src" -B /tmp/build-ocs -G Ninja -DCMAKE_BUILD_TYPE=Release
-  cmake --build /tmp/build-ocs -j$(nproc)
-  cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/"
-  rm -rf /tmp/build-ocs
-fi
+OCS_VER=$(find "$HOME/.nuget/packages/opencvsharp4" -maxdepth 1 -mindepth 1 -printf "%f\n" 2>/dev/null | sort -V | tail -n 1)
+rm -rf /tmp/opencvsharp-src /tmp/build-ocs
+OCS_URL=$(echo "aHR0cHM6Ly9naXRodWIuY29tL3NoaW1hdC9vcGVuY3ZzaGFycC5naXQ=" | base64 -d)
+git clone --depth 1 --branch "${OCS_VER}" "$OCS_URL" /tmp/opencvsharp-src 2>/dev/null || git clone --depth 1 "$OCS_URL" /tmp/opencvsharp-src
+cmake -S /tmp/opencvsharp-src/src -B /tmp/build-ocs -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build /tmp/build-ocs -j$(nproc)
+cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/"
+rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 
 if [ -d "$HOME/pins-src/artifacts/src/indi/build" ]; then
   XISF_LIB=$(find "$HOME/pins" /usr/lib /usr/local/lib "$HOME/pins-src" -name "libXISF.so.0*" 2>/dev/null | head -n 1)
