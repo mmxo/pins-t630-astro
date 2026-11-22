@@ -12,7 +12,7 @@ sudo add-apt-repository -y ppa:mutlaqja/ppa
 sudo add-apt-repository -y ppa:pch/phd2
 sudo apt update
 sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-build \
-  libtesseract-dev libleptonica-dev indi-bin indi-3rdparty-drivers    \
+  libtesseract-dev libleptonica-dev indi-bin    \
    phd2 xvfb x11vnc matchbox-window-manager netcat-openbsd \
   libcfitsio-dev libnova-dev libusb-1.0-0-dev
 
@@ -84,7 +84,7 @@ cp -f "$SCRIPT_DIR/configs/"*.xml "$HOME/.indi/" 2>/dev/null || true
 
 echo "=== 8. Systemd-Dienste (PHD2 Headless + randloses VNC & PINS) ==="
 sudo systemctl disable --now sysupdate-api.service 2>/dev/null || true
-sudo apt-mark hold pins indi-bin indi-3rdparty-drivers
+sudo apt-mark hold pins indi-bin
 
 sudo tee /etc/systemd/system/phd2.service > /dev/null << 'SVC'
 [Unit]
