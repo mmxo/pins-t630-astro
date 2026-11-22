@@ -28,7 +28,7 @@ if [ ! -f "$HOME/pins/NINA.dll" ]; then
   export PATH="$HOME/.dotnet:$PATH"
   chmod +x "$HOME/pins-src/build-and-install-pins-x64.sh"
   cd "$HOME/pins-src"
-  ./build-and-install-pins-x64.sh
+  ./build-and-install-pins-x64.sh || sudo apt-get install -f -y
 fi
 
 echo "=== 3. Rechte & USB-Autosuspend ==="
