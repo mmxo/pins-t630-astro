@@ -7,6 +7,10 @@ HOTSPOT_PASS="astro1234" # Hier bei Bedarf eigenes Passwort eintragen (min. 8 Ze
 
 echo "=== 1. System-Pakete, INDI, PHD2, VNC & Build-Tools ==="
 sudo apt update
+sudo apt install -y software-properties-common
+sudo add-apt-repository -y ppa:mutlaqja/ppa
+sudo add-apt-repository -y ppa:pch/phd2
+sudo apt update
 sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-build \
   libtesseract-dev libleptonica-dev indi-bin indi-svbony indi-asi indi-lx200-onstep \
   indi-myfocuserpro2 phd2 xvfb x11vnc matchbox-window-manager netcat-openbsd \
