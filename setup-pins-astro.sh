@@ -69,14 +69,6 @@ cmake --build /tmp/build-ocs -j$(nproc)
 cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/"
 rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 
-if [ -d "$HOME/pins-src/artifacts/src/indi/build" ]; then
-  XISF_LIB=$(find "$HOME/pins" /usr/lib /usr/local/lib "$HOME/pins-src" -name "libXISF.so.0*" 2>/dev/null | head -n 1)
-  [ -n "$XISF_LIB" ] && sudo ln -sf "$XISF_LIB" /usr/local/lib/libXISF.so
-  cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j$(nproc)
-  sudo rm -f /usr/local/lib/libXISF.so
-  sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
-fi
-
 find "$HOME/pins/External/linux-x64" -type f -name "*.so*" -exec ln -sf {} "$HOME/pins/" \;
 
 echo "=== 6. libXISF-Trennung, indiserver-Wrapper & MyFocuserPro2-XML ==="
@@ -92,6 +84,7 @@ XML
 
 echo "=== 7. Gespeicherte PHD2- & INDI-Configs wiederherstellen ==="
 mkdir -p "$HOME/.indi"
+cp -f "$REPO_DIR/configs/CCD Simulator_config.xml" "$HOME/.indi/"
 [ -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" ] && cp -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" "$HOME/.PHDGuidingV2"
 cp -f "$SCRIPT_DIR/configs/"*.xml "$HOME/.indi/" 2>/dev/null || true
 
