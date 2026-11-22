@@ -161,6 +161,8 @@ if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 5
   SKY_URL="https://nighttime-imaging.eu"
   curl -fL --progress-bar "$SKY_URL" -o /tmp/nina-northern-sky.zip && \
   unzip -oq /tmp/nina-northern-sky.zip -d "$HOME/.local/share/NINA/FramingAssistantCache/" && \
+    mv -f "$HOME/.local/share/NINA/FramingAssistantCache"/FramingAssistantCache_*/* "$HOME/.local/share/NINA/FramingAssistantCache/" 2>/dev/null || true && \
+    rmdir "$HOME/.local/share/NINA/FramingAssistantCache"/FramingAssistantCache_* 2>/dev/null || true && \
   rm -f /tmp/nina-northern-sky.zip
 fi
 
