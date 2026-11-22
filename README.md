@@ -11,3 +11,26 @@
 - **Touch 'N' Stars Web-Oberflaeche:** `http://10.42.0.1:5000`
 - **PHD2 Live-VNC:** `10.42.0.1:5901` (Passwort: `1234`)
 - **Wartung / Updates:** LAN-Kabel an `enp1s0` anstecken (laeuft parallel zum Hotspot)
+
+## Wiederherstellung auf einem frisch installierten Ubuntu 24.04
+
+1. Bei der Ubuntu-Installation den Benutzer als **`hase`** anlegen und das **LAN-Kabel** einstecken.
+2. Im Terminal ausführen (bei `git clone` GitHub-Username `mmxo` und Personal Access Token eingeben):
+
+```bash
+sudo apt update && sudo apt install -y git
+git clone https://github.com ~/pins-t630-astro
+cd ~/pins-t630-astro && ./setup-pins-astro.sh
+sudo reboot
+```
+
+3. Optional für Trockentests im Zimmer die Test-FITS-Umgebung ins Home-Verzeichnis übernehmen:
+
+```bash
+cp -r ~/pins-t630-astro/test-fits ~/ && cp ~/pins-t630-astro/prepare-test-fits.sh ~/
+```
+
+4. Nach dem Neustart das LAN-Kabel abziehen:
+   - **WLAN-Hotspot:** `pins-T630`
+   - **Touch 'N' Stars Web-UI:** `http://10.42.0.1:5000`
+   - **PHD2 VNC (AnyPane):** `10.42.0.1:5901` (Passwort: `1234`)
