@@ -18,10 +18,8 @@ sudo apt install -y git curl wget unzip build-essential gcc python3 cmake ninja-
 echo "=== 2. PINS-Basis-Installation (falls noch nicht vorhanden) ==="
 if [ ! -f "$HOME/pins/NINA.dll" ]; then
   [ ! -d "$HOME/pins-src" ] && git clone https://github.com/nitr57/pins.git "$HOME/pins-src"
-  curl -sSL https://dot.net | bash -s -- --channel 10.0
-  export DOTNET_ROOT="$HOME/.dotnet"
   export PATH="$HOME/.dotnet:$PATH"
-  grep -q "DOTNET_ROOT" "$HOME/.bashrc" || printf "\nexport DOTNET_ROOT=\$HOME/.dotnet\nexport PATH=\$HOME/.dotnet:\$PATH\n" >> "$HOME/.bashrc"
+  python3 -c 'import json; g="/home/hase/pins-src/global.json"; d=json.load(open(g)); d["sdk"]["version"]="10.0.100"; d["sdk"]["rollForward"]="latestFeature"; json.dump(d,open(g,"w"),indent=2)'
   chmod +x "$HOME/pins-src/build-and-install-pins-x64.sh"
   cd "$HOME/pins-src"
   ./build-and-install-pins-x64.sh
