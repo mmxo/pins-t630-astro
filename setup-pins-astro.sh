@@ -75,6 +75,8 @@ if [ -d "$HOME/pins-src/artifacts/src/indi/build" ]; then
   sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
 fi
 
+find "$HOME/pins/External/linux-x64" -type f -name "*.so*" -exec ln -sf {} "$HOME/pins/" \;
+
 echo "=== 6. libXISF-Trennung, indiserver-Wrapper & MyFocuserPro2-XML ==="
 ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF* "$HOME/pins/" && sudo ldconfig
 [ ! -f /usr/bin/indiserver.bin ] && sudo mv -f /usr/bin/indiserver /usr/bin/indiserver.bin
