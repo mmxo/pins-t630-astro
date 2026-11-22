@@ -49,7 +49,9 @@ o="if (!WriteFifoCommand($\"start {driverName}\", TimeSpan.FromSeconds(5))) {"
 n="var execPath = driverName.StartsWith(\"/\") ? driverName : $\"/usr/bin/{driverName}\";\n                if (!WriteFifoCommand($\"start {execPath}\", TimeSpan.FromSeconds(5))) {"
 if o in s and n not in s: open(p,"w").write(s.replace(o,n,1))
 '
-dotnet publish NINA/NINA.csproj -c Release -r linux-x64 --self-contained false -o "$HOME/pins"
+dotnet restore NINA/NINA.csproj -r linux-x64
+dotnet build NINA/NINA.csproj -c Release -r linux-x64 --no-restore
+dotnet publish NINA/NINA.csproj -c Release -r linux-x64 --no-build -o "$HOME/pins"
 dotnet build NINA.INDI/NINA.INDI.csproj -c Release -o "$HOME/pins/"
 find "$HOME/.local/share/NINA/Plugins" -name "NINA.INDI.dll" -exec cp -f "$HOME/pins/NINA.INDI.dll" {} \;
 
