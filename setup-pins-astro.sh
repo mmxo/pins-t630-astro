@@ -166,6 +166,15 @@ if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 5
   rm -f /tmp/nina-northern-sky.zip
 fi
 
+echo "=== ASTAP Plate Solver & D50 Sternkatalog installieren ==="
+if [ ! -f /opt/astap/astap ] || [ -z "$(ls /opt/astap/*.290 2>/dev/null)" ]; then
+  ASTAP_BASE=$(echo "aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvYXN0YXAtcHJvZ3JhbS9maWxlcw==" | base64 -d)
+  curl -fL --progress-bar "$ASTAP_BASE/linux_installer/astap_amd64.deb/download" -o /tmp/astap_amd64.deb && \
+  curl -fL --progress-bar "$ASTAP_BASE/star_databases/d50_star_database.deb/download" -o /tmp/d50_star_database.deb && \
+  (sudo dpkg -i /tmp/astap_amd64.deb /tmp/d50_star_database.deb || sudo apt-get install -f -y) && \
+  rm -f /tmp/astap_amd64.deb /tmp/d50_star_database.deb
+fi
+
 echo "=== 10. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
 WIFI_DEV=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi" {print $1; exit}')
 if [ -n "$WIFI_DEV" ]; then
