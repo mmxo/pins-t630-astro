@@ -69,7 +69,8 @@ if [ -d "$HOME/pins-src/artifacts/src/opencvsharp/src" ]; then
 fi
 
 if [ -d "$HOME/pins-src/artifacts/src/indi/build" ]; then
-  sudo ln -sf "$HOME/pins/libXISF.so.0.2.13" /usr/local/lib/libXISF.so
+  XISF_LIB=$(find "$HOME/pins" /usr/lib /usr/local/lib "$HOME/pins-src" -name "libXISF.so.0*" 2>/dev/null | head -n 1)
+  [ -n "$XISF_LIB" ] && sudo ln -sf "$XISF_LIB" /usr/local/lib/libXISF.so
   cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j$(nproc)
   sudo rm -f /usr/local/lib/libXISF.so
   sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
