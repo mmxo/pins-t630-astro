@@ -19,7 +19,7 @@
 
 ```bash
 sudo apt update && sudo apt install -y git
-git clone https://github.com ~/pins-t630-astro
+git clone https://github.com/mmxo/pins-t630-astro.git ~/pins-t630-astro
 cd ~/pins-t630-astro && ./setup-pins-astro.sh
 sudo reboot
 ```
