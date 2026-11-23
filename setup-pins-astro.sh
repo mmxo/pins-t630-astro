@@ -72,6 +72,7 @@ rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 find "$HOME/pins/External/linux-x64" -type f -name "*.so*" -exec ln -sf {} "$HOME/pins/" \;
 
 echo "=== 6. libXISF-Trennung, indiserver-Wrapper & MyFocuserPro2-XML ==="
+command -v indiserver >/dev/null 2>&1 || sudo apt-get install -y indi-bin
 ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF* "$HOME/pins/" && sudo ldconfig
 [ ! -f /usr/bin/indiserver.bin ] && sudo mv -f /usr/bin/indiserver /usr/bin/indiserver.bin
 printf '#!/bin/bash\nexport LD_PRELOAD=/home/hase/pins/libXISF.so.0.2.13\nexec /usr/bin/indiserver.bin "$@"\n' | sudo tee /usr/bin/indiserver > /dev/null
@@ -85,7 +86,7 @@ XML
 
 echo "=== 7. Gespeicherte PHD2- & INDI-Configs wiederherstellen ==="
 mkdir -p "$HOME/.indi"
-cp -f "$REPO_DIR/configs/CCD Simulator_config.xml" "$HOME/.indi/"
+[ -f "$SCRIPT_DIR/configs/CCD Simulator_config.xml" ] && cp -f "$SCRIPT_DIR/configs/CCD Simulator_config.xml" "$HOME/.indi/"
 [ -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" ] && cp -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" "$HOME/.PHDGuidingV2"
 cp -f "$SCRIPT_DIR/configs/"*.xml "$HOME/.indi/" 2>/dev/null || true
 
@@ -151,7 +152,7 @@ for p in glob.glob("/home/hase/.local/share/NINA/Plugins/*/Touch-N-Stars/app/ass
 echo "=== N.I.N.A. Northern Sky Offline Sky Map Cache (1.4 GB) laden ==="
 mkdir -p "$HOME/.local/share/NINA/FramingAssistantCache"
 if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 500 ]; then
-  SKY_URL="https://nighttime-imaging.eu"
+  SKY_URL=$(curl -fsSL "https://nighttime-imaging.eu" | grep -oiE 'https://[^"]+Northern[^"]+\.zip' | grep -vi 'starless' | head -n 1)
   curl -fL --progress-bar "$SKY_URL" -o /tmp/nina-northern-sky.zip && \
   unzip -oq /tmp/nina-northern-sky.zip -d "$HOME/.local/share/NINA/FramingAssistantCache/" && \
     mv -f "$HOME/.local/share/NINA/FramingAssistantCache"/FramingAssistantCache_*/* "$HOME/.local/share/NINA/FramingAssistantCache/" 2>/dev/null || true && \
