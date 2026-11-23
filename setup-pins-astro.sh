@@ -84,6 +84,8 @@ sudo tee /usr/share/indi/indi_myfocuserpro2.xml > /dev/null << 'XML'
 <driversList><devGroup group="Focusers"><device label="MyFocuserPro2" mdpd="true"><driver name="MyFocuserPro2">indi_myfocuserpro2_focus</driver><version>1.0</version></device></devGroup></driversList>
 XML
 
+[ -x "$SCRIPT_DIR/prepare-test-fits.sh" ] && "$SCRIPT_DIR/prepare-test-fits.sh" || true
+
 echo "=== 7. Gespeicherte PHD2- & INDI-Configs wiederherstellen ==="
 mkdir -p "$HOME/.indi"
 [ -f "$SCRIPT_DIR/configs/CCD Simulator_config.xml" ] && cp -f "$SCRIPT_DIR/configs/CCD Simulator_config.xml" "$HOME/.indi/"
