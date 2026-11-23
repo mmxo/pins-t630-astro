@@ -81,6 +81,16 @@ rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 
 find "$HOME/pins/External/linux-x64" -type f -name "*.so*" -exec ln -sf {} "$HOME/pins/" \;
 
+echo "=== 5b. CCD Simulator Default auf ~/test-fits + Enabled patchen ==="
+CCD_SIM_CPP="$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"
+if [ -f "$CCD_SIM_CPP" ]; then
+  sed -i 's|DirectoryTP\[0\].fill("LOCATION", "Location", getenv("HOME"));|DirectoryTP[0].fill("LOCATION", "Location", (std::string(getenv("HOME")) + "/test-fits").c_str());|' "$CCD_SIM_CPP"
+  sed -i 's|DirectorySP\[INDI_ENABLED\].fill("INDI_ENABLED", "Enabled", ISS_OFF);|DirectorySP[INDI_ENABLED].fill("INDI_ENABLED", "Enabled", ISS_ON);|' "$CCD_SIM_CPP"
+  sed -i 's|DirectorySP\[INDI_DISABLED\].fill("INDI_DISABLED", "Disabled", ISS_ON);|DirectorySP[INDI_DISABLED].fill("INDI_DISABLED", "Disabled", ISS_OFF);|' "$CCD_SIM_CPP"
+  cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j$(nproc)
+  sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
+fi
+
 echo "=== 6. libXISF-Trennung, indiserver-Wrapper & MyFocuserPro2-XML ==="
 command -v indiserver >/dev/null 2>&1 || sudo apt-get install -y indi-bin
 ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF* "$HOME/pins/" && sudo ldconfig
