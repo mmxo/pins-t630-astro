@@ -189,6 +189,7 @@ if [ -n "$WIFI_DEV" ]; then
     sudo nmcli dev wifi hotspot ifname "$WIFI_DEV" con-name Hotspot ssid "$HOTSPOT_SSID" password "$HOTSPOT_PASS"
   fi
   sudo nmcli connection modify Hotspot 802-11-wireless.ssid "$HOTSPOT_SSID"
+  sudo nmcli connection modify Hotspot wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$HOTSPOT_PASS"
   sudo nmcli connection modify Hotspot 802-11-wireless.band bg
   sudo nmcli connection modify Hotspot 802-11-wireless.channel 6
   sudo nmcli connection modify Hotspot connection.autoconnect yes
