@@ -11,3 +11,4 @@
 - **Gebündelte Diagnose**: Bei Fehlern immer EINEN zusammenhängenden Diagnosebefehl (Service-Status + Logs + Config + Prozesse) anfordern statt scheibchenweiser Einzelabfragen.
 - **Saubere Code-Blöcke unter 100 Zeilen**: Längere Skripte in kompakte Teil-Blöcke unter 100 Zeilen aufteilen und URLs mit Pfad in `HOST` + `PATH` trennen, damit Terminal-Paste nichts abschneidet.
 - **Regelmäßige Konsolidierung**: Nach 3–4 Hotfixes das gesamte Skript gegenlesen, tote Workarounds entfernen und die Schrittnummerierung sauber halten.
+- **URLs ausschließlich in Code-Blöcken (` ``` `) ausgeben**, niemals als Link im normalen Fließtext (verhindert Link-Chip-Kürzungen durch die Web-Oberfläche).
