@@ -88,6 +88,7 @@ if [ -f "$CCD_SIM_CPP" ]; then
   sed -i 's|"CCD Y resolution", "%4.0f", 512, 8192, 512, 1024|"CCD Y resolution", "%4.0f", 512, 8192, 512, 3008|' "$CCD_SIM_CPP"
   sed -i 's|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
   sed -i 's|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
+    python3 -c 'f="\$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); o="defineProperty(DirectorySP);"; n="defineProperty(DirectorySP);\n        if (DirectorySP[INDI_ENABLED].getState() == ISS_ON && m_AllFiles.empty())\n            watchDirectory();"; open(f,"w").write(t.replace(o,n,1)) if o in t and "m_AllFiles.empty()" not in t else None'
   cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j"$(nproc)"
   sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
 fi
