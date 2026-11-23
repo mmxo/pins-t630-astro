@@ -81,7 +81,8 @@ cat << 'WRAP' | sudo tee /usr/bin/indi_simulator_ccd > /dev/null
 #!/bin/bash
 export LD_PRELOAD=/home/hase/pins/libXISF.so.0.2.13
 (
-  while pgrep -x indi_simulator_ >/dev/null 2>&1; do
+  sleep 2
+  while pgrep -f indi_simulator_ccd.bin >/dev/null 2>&1; do
     if [ "$(indi_getprop -1 "CCD Simulator.CONNECTION.CONNECT" 2>/dev/null)" = "On" ] && \
        [ "$(indi_getprop -1 "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED" 2>/dev/null)" != "On" ]; then
       indi_setprop "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED=On" >/dev/null 2>&1
