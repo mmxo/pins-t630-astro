@@ -76,22 +76,7 @@ ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF*
 [ ! -f /usr/bin/indiserver.bin ] && sudo mv -f /usr/bin/indiserver /usr/bin/indiserver.bin
 printf '#!/bin/bash\nexport LD_PRELOAD=/home/hase/pins/libXISF.so.0.2.13\nexec /usr/bin/indiserver.bin "$@"\n' | sudo tee /usr/bin/indiserver > /dev/null
 sudo chmod +x /usr/bin/indiserver
-[ ! -f /usr/bin/indi_simulator_ccd.bin ] && sudo mv -f /usr/bin/indi_simulator_ccd /usr/bin/indi_simulator_ccd.bin
-cat << 'WRAP' | sudo tee /usr/bin/indi_simulator_ccd > /dev/null
-#!/bin/bash
-export LD_PRELOAD=/home/hase/pins/libXISF.so.0.2.13
-(
-  while kill -0 $$ 2>/dev/null; do
-    if [ "$(indi_getprop -1 "CCD Simulator.CONNECTION.CONNECT" 2>/dev/null)" = "On" ]; then
-      for k in 1 2 3; do sleep 2; indi_setprop "CCD Simulator.CCD_DIRECTORY_TOGGLE.INDI_ENABLED=On" >/dev/null 2>&1; done
-      break
-    fi
-    sleep 1
-  done
-) &
-exec /usr/bin/indi_simulator_ccd.bin "$@"
-WRAP
-sudo chmod +x /usr/bin/indi_simulator_ccd
+
 
 sudo tee /usr/share/indi/indi_myfocuserpro2.xml > /dev/null << 'XML'
 <?xml version="1.0" encoding="UTF-8"?>
