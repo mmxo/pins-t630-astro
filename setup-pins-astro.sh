@@ -84,6 +84,7 @@ sudo tee /usr/share/indi/indi_myfocuserpro2.xml > /dev/null << 'XML'
 <driversList><devGroup group="Focusers"><device label="MyFocuserPro2" mdpd="true"><driver name="MyFocuserPro2">indi_myfocuserpro2_focus</driver><version>1.0</version></device></devGroup></driversList>
 XML
 
+mkdir -p "$HOME/test-fits" && cp -rf "$SCRIPT_DIR/test-fits/"* "$HOME/test-fits/" 2>/dev/null || true
 [ -x "$SCRIPT_DIR/prepare-test-fits.sh" ] && "$SCRIPT_DIR/prepare-test-fits.sh" || true
 
 echo "=== 7. Gespeicherte PHD2- & INDI-Configs wiederherstellen ==="
