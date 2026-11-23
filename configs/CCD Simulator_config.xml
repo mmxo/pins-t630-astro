@@ -310,7 +310,7 @@
   </oneText>
 </newTextVector>
 <newSwitchVector device='CCD Simulator' name='CCD_RESOLUTION'>
-  <oneSwitch name='1280 x 1024'>
+  <oneSwitch name='3008 x 3008'>
       On
   </oneSwitch>
   <oneSwitch name='6000 x 4000'>
