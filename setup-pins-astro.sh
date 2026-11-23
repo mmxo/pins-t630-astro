@@ -189,6 +189,25 @@ for prof in "$HOME/.local/share/NINA/Profiles"/*.profile; do
   [ -f "$prof" ] && sed -i "s|<ImageFilePath>.*</ImageFilePath>|<ImageFilePath>$HOME/astro-images</ImageFilePath>|g" "$prof"
 done
 
+echo "=== 9b. Samba-Freigabe ([astro]) fuer macOS Finder einrichten ==="
+sudo apt-get install -y samba
+if ! grep -q "^\[astro\]" /etc/samba/smb.conf 2>/dev/null; then
+  cat << EOF | sudo tee -a /etc/samba/smb.conf > /dev/null
+
+[astro]
+   path = $HOME
+   browseable = yes
+   read only = no
+   valid users = $USER
+   create mask = 0644
+   directory mask = 0755
+EOF
+fi
+SMB_PASS="${HOTSPOT_PASS:-astro1234}"
+(echo "$SMB_PASS"; echo "$SMB_PASS") | sudo smbpasswd -s -a "$USER"
+sudo systemctl enable --now smbd
+sudo systemctl restart smbd
+
 echo "=== 10. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
 WIFI_DEV=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi" {print $1; exit}')
 if [ -n "$WIFI_DEV" ]; then
