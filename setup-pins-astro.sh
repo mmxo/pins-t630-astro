@@ -176,6 +176,12 @@ if [ ! -f /opt/astap/astap ] || [ -z "$(ls /opt/astap/*.290 2>/dev/null)" ]; the
   sudo ln -sf /opt/astap/astap_cli /usr/local/bin/astap_cli
 fi
 
+echo "=== Absoluten Bild-Speicherpfad (/home/hase/astro-images) setzen ==="
+mkdir -p "$HOME/astro-images"
+for prof in "$HOME/.local/share/NINA/Profiles"/*.profile; do
+  [ -f "$prof" ] && sed -i "s|<ImageFilePath>.*</ImageFilePath>|<ImageFilePath>$HOME/astro-images</ImageFilePath>|g" "$prof"
+done
+
 echo "=== 10. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
 WIFI_DEV=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi" {print $1; exit}')
 if [ -n "$WIFI_DEV" ]; then
