@@ -5,6 +5,16 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HOTSPOT_SSID="pins-T630"
 HOTSPOT_PASS="astro1234" # Hier bei Bedarf eigenes Passwort eintragen (min. 8 Zeichen)
 
+echo "=== 0. snapd restlos entfernen & sperren ==="
+sudo systemctl stop snapd.service snapd.socket snapd.seeded.service 2>/dev/null || true
+sudo apt-get purge -y snapd 2>/dev/null || true
+sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd "$HOME/snap"
+cat << 'EOF' | sudo tee /etc/apt/preferences.d/nosnap.pref > /dev/null
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+EOF
+
 echo "=== 1. System-Pakete, INDI, PHD2, VNC & Build-Tools ==="
 sudo apt update
 sudo apt install -y software-properties-common
