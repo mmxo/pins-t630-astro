@@ -9,7 +9,7 @@ Diese Datei dokumentiert den geprüften Endstand und alle technischen Root-Cause
 - **`CCD Simulator` (`ccd_simulator.cpp`) – Kaltstart- & Reboot-fester C++-Patch:**
   - Defaults in `initProperties()` auf `\$HOME/test-fits`, `Use Dir. = Enabled (ISS_ON)`, `3008x3008` und `3.76 um` gepatcht.
   - `watchDirectory()` in `updateProperties()` beim Connect ergänzt, damit `m_AllFiles` sofort gefüllt wird.
-  - `StartExposure()` auf `(!m_AllFiles.empty() || watchDirectory())` gepatcht, damit N.I.N.A.s `.profile`-Switch-Reset beim Connect das FITS-Replay nie wieder abschaltet.
+  - `StartExposure()` auf `watchDirectory() (liest Verzeichnis bei jeder Aufnahme live neu ein und rotiert alphabetisch durch alle .fits)` gepatcht, damit N.I.N.A.s `.profile`-Switch-Reset beim Connect das FITS-Replay nie wieder abschaltet.
   - Vor `cmake --build` wird `ccd_simulator.cpp.o` gelöscht, damit Ninja die C++-Änderungen garantiert neu übersetzt.
   - **Wichtig:** Keinen Wrapper um `indi_simulator_ccd` bauen (führt sonst zu `DRIVER_INFO`-Timeout).
 - **PHD2 Headless & VNC:** Xvfb `:99` mit `matchbox-window-manager -use_titlebar no` + `x11vnc` auf Port `5901` (`1234`); Touch 'N' Stars `GuidingPage-*.js` auf unbeschnittene 4:3-Darstellung gepatcht.

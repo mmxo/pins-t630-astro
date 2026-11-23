@@ -89,7 +89,8 @@ if [ -f "$CCD_SIM_CPP" ]; then
   sed -i 's|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
   sed -i 's|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
     python3 -c 'f="\$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); o="defineProperty(DirectorySP);"; n="defineProperty(DirectorySP);\n        if (DirectorySP[INDI_ENABLED].getState() == ISS_ON && m_AllFiles.empty())\n            watchDirectory();"; open(f,"w").write(t.replace(o,n,1)) if o in t and "m_AllFiles.empty()" not in t else None'
-    sed -i 's|DirectorySP\[INDI_ENABLED\].getState() == ISS_ON|(!m_AllFiles.empty() \|\| watchDirectory())|' "$CCD_SIM_CPP"
+    sed -i 's|DirectorySP\[INDI_ENABLED\].getState() == ISS_ON|watchDirectory()|' "$CCD_SIM_CPP"
+    python3 -c 'f="$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); t=t.replace("    DIR* dirp = opendir(DirectoryTP[0].getText());", "    m_AllFiles.clear();\n    DIR* dirp = opendir(DirectoryTP[0].getText());", 1); t=t.replace("    if (m_RemainingFiles.empty())\n        m_RemainingFiles = m_AllFiles;\n    const std::string filename = m_RemainingFiles[0];\n    m_RemainingFiles.pop_front();", "    static std::string lastFile;\n    std::string filename = m_AllFiles[0];\n    for (size_t i = 0; i < m_AllFiles.size(); i++) { if (m_AllFiles[i] > lastFile) { filename = m_AllFiles[i]; break; } }\n    lastFile = filename;", 1); open(f,"w").write(t)'
   find "$HOME/pins-src/artifacts/src/indi/build" -name "ccd_simulator.cpp.o" -delete
   sudo ln -sf "$HOME/pins"/libXISF.so* /usr/local/lib/ 2>/dev/null || true
   cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j"$(nproc)"
