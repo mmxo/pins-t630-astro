@@ -103,7 +103,9 @@ if [ -f "$CCD_SIM_CPP" ]; then
     python3 -c 'import os; f=os.path.expanduser("~/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"); t=open(f).read(); o="    if (fits_read_key_dbl(fptr, \"PIXSIZE1\", &pixel_size, comment, &status))\n    {\n        char error_status = {0};\n        fits_get_errstatus(status, error_status);\n        LOGF_WARN(\"Error reading file %s due to error %s\", filename.c_str(), error_status);\n        return false;\n    }"; n="    if (fits_read_key_dbl(fptr, \"PIXSIZE1\", &pixel_size, comment, &status))\n    {\n        status = 0;\n        pixel_size = 3.76;\n    }"; t=t.replace(o,n,1) if o in t else t; c="    closedir(dirp);"; cn="    closedir(dirp);\n    std::sort(m_AllFiles.begin(), m_AllFiles.end());"; t=t.replace(c,cn,1) if c in t and "std::sort(m_AllFiles.begin()" not in t.split("if (m_AllFiles.empty())") else t; open(f,"w").write(t)'
   find "$HOME/pins-src/artifacts/src/indi/build" -name "ccd_simulator.cpp.o" -delete
   sudo ln -sf "$HOME/pins"/libXISF.so* /usr/local/lib/ 2>/dev/null || true
+  ls "$HOME/pins"/libXISF.so* >/dev/null 2>&1 && sudo ln -sf "$HOME/pins"/libXISF.so* /usr/local/lib/
   cmake --build "$HOME/pins-src/artifacts/src/indi/build" --target indi_simulator_ccd -j"$(nproc)"
+  ls "$HOME/pins"/libXISF.so* >/dev/null 2>&1 && sudo rm -f /usr/local/lib/libXISF* && sudo ldconfig
   sudo rm -f /usr/local/lib/libXISF* && sudo ldconfig
   sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
 fi
