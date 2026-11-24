@@ -1,0 +1,13 @@
+[Unit]
+Description=Lightweight INDI Control Web Panel (Port 8624)
+After=network.target pins.service
+
+[Service]
+Type=simple
+User=hase
+ExecStart=/usr/bin/python3 /usr/local/bin/indi-web-panel.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
