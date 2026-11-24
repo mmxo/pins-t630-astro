@@ -112,6 +112,7 @@ fi
 
 echo "=== 8. libXISF-Trennung, indiserver-Wrapper, MyFocuserPro2 & Test-FITS ==="
 ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF* "$HOME/pins/" && sudo ldconfig
+ls "$HOME/pins-src/artifacts/src/libxisf/build"/libXISF.so* >/dev/null 2>&1 && cp -f "$HOME/pins-src/artifacts/src/libxisf/build"/libXISF.so* "$HOME/pins/"
 [ ! -f /usr/bin/indiserver ] && [ ! -f /usr/bin/indiserver.bin ] && sudo apt-get install -y indi-bin
 [ -f /usr/bin/indiserver ] && [ ! -f /usr/bin/indiserver.bin ] && sudo mv -f /usr/bin/indiserver /usr/bin/indiserver.bin
 printf '#!/bin/bash\nexport LD_PRELOAD=%s/pins/libXISF.so.0.2.13\nexec /usr/bin/indiserver.bin "$@"\n' "$HOME" | sudo tee /usr/bin/indiserver > /dev/null
