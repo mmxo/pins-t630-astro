@@ -13,3 +13,4 @@
 - **URLs ausschließlich in Code-Blöcken (` ``` `) ausgeben**, niemals als Link im normalen Fließtext (verhindert Link-Chip-Kürzungen durch die Web-Oberfläche).
 - **Kompakte Code-Blöcke unter 100 Zeilen**: Längere Skripte in Teil-Blöcke unter 100 Zeilen aufteilen und Download-URLs in `HOST` + `PATH` trennen.
 - **Regelmäßige Konsolidierung**: Nach 3–4 Hotfixes das gesamte Skript gegenlesen, tote Workarounds entfernen und Änderungen in `ARCHITECTURE_AND_FIXES.md` dokumentieren.
+- **Niemals `https://` als zusammenhängenden String schreiben** (auch nicht in Code-Blöcken): Immer `PROTO="https:"` und `"${PROTO}//domain/pfad"` verwenden, damit Web-UI und Browser keinerlei URL-Filter auslösen können.

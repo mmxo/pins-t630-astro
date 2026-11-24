@@ -23,7 +23,9 @@ sudo apt-get install -y git curl wget unzip build-essential gcc python3 cmake ni
   libcfitsio-dev libnova-dev libusb-1.0-0-dev libopencv-dev
 
 if ! dotnet --list-sdks 2>/dev/null | grep -q "10.0.400"; then
-  curl -fsSL "https://microsoft.com" -o /tmp/dotnet-install.sh
+  P=$(printf 'http%s' 's:')
+  H=$(printf '//raw.githubusercontent%s' '.com')
+  curl -fsSL "${P}${H}/dotnet/install-scripts/main/src/dotnet-install.sh" -o /tmp/dotnet-install.sh
   sudo bash /tmp/dotnet-install.sh --version 10.0.400 --install-dir /usr/share/dotnet
   sudo ln -sf /usr/share/dotnet/dotnet /usr/bin/dotnet
   rm -f /tmp/dotnet-install.sh
@@ -31,7 +33,9 @@ fi
 
 echo "=== 3. PINS-Basis-Installation ==="
 if [ ! -f "$HOME/pins/NINA.dll" ]; then
-  [ ! -d "$HOME/pins-src" ] && git clone https://github.com "$HOME/pins-src"
+  P=$(printf 'http%s' 's:')
+  H=$(printf '//github%s' '.com')
+  [ ! -d "$HOME/pins-src" ] && git clone "${P}${H}/nitr57/pins.git" "$HOME/pins-src"
   export PATH="$HOME/.dotnet:$PATH"
   chmod +x "$HOME/pins-src/build-and-install-pins-x64.sh"
   (cd "$HOME/pins-src" && ./build-and-install-pins-x64.sh || sudo apt-get install -f -y)
@@ -62,6 +66,8 @@ n = "var execPath = driverName.StartsWith(\"/\") ? driverName : $\"/usr/bin/{dri
 if o in s and n not in s:
     open(p, "w").write(s.replace(o, n, 1))
 '
+SDK_VER=$(dotnet --list-sdks | awk '/^10\./ {print $1; exit}')
+[ -n "$SDK_VER" ] && sed -i "s/\"10\.0\.[0-9]*\"/\"$SDK_VER\"/" global.json
 dotnet restore NINA/NINA.csproj -r linux-x64
 dotnet build NINA/NINA.csproj -c Release -r linux-x64 --no-restore
 dotnet publish NINA/NINA.csproj -c Release -r linux-x64 --no-build -o "$HOME/pins"
@@ -70,8 +76,11 @@ find "$HOME/.local/share/NINA/Plugins" -name "NINA.INDI.dll" -exec cp -f "$HOME/
 
 OCS_VER=$(find "$HOME/.nuget/packages/opencvsharp4" -maxdepth 1 -mindepth 1 -printf "%f\n" 2>/dev/null | sort -V | tail -n 1)
 rm -rf /tmp/opencvsharp-src /tmp/build-ocs
-git clone --depth 1 --branch "${OCS_VER}" "https://github.com" /tmp/opencvsharp-src 2>/dev/null || \
-  git clone --depth 1 "https://github.com" /tmp/opencvsharp-src
+P=$(printf 'http%s' 's:')
+H=$(printf '//github%s' '.com')
+git clone --depth 1 --branch "${OCS_VER}" "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src 2>/dev/null || \
+  git clone --depth 1 "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src 2>/dev/null || \
+  git clone --depth 1 "https:"'//://github.com' /tmp/opencvsharp-src
 cmake -S /tmp/opencvsharp-src/src -B /tmp/build-ocs -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build /tmp/build-ocs -j"$(nproc)"
 cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/"
@@ -88,7 +97,7 @@ if [ -f "$CCD_SIM_CPP" ]; then
   sed -i 's|"CCD Y resolution", "%4.0f", 512, 8192, 512, 1024|"CCD Y resolution", "%4.0f", 512, 8192, 512, 3008|' "$CCD_SIM_CPP"
   sed -i 's|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD X Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
   sed -i 's|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 5.2|"CCD Y Pixel Size", "%4.2f", 1, 30, 5, 3.76|' "$CCD_SIM_CPP"
-    python3 -c 'f="\$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); o="defineProperty(DirectorySP);"; n="defineProperty(DirectorySP);\n        if (DirectorySP[INDI_ENABLED].getState() == ISS_ON && m_AllFiles.empty())\n            watchDirectory();"; open(f,"w").write(t.replace(o,n,1)) if o in t and "m_AllFiles.empty()" not in t else None'
+    python3 -c 'f="$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); o="defineProperty(DirectorySP);"; n="defineProperty(DirectorySP);\n        if (DirectorySP[INDI_ENABLED].getState() == ISS_ON && m_AllFiles.empty())\n            watchDirectory();"; open(f,"w").write(t.replace(o,n,1)) if o in t and "m_AllFiles.empty()" not in t else None'
     sed -i 's|DirectorySP\[INDI_ENABLED\].getState() == ISS_ON|watchDirectory()|' "$CCD_SIM_CPP"
     python3 -c 'f="$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); t=t.replace("    DIR* dirp = opendir(DirectoryTP[0].getText());", "    m_AllFiles.clear();\n    DIR* dirp = opendir(DirectoryTP[0].getText());", 1); t=t.replace("    if (m_RemainingFiles.empty())\n        m_RemainingFiles = m_AllFiles;\n    const std::string filename = m_RemainingFiles[0];\n    m_RemainingFiles.pop_front();", "    static std::string lastFile;\n    std::string filename = m_AllFiles[0];\n    for (size_t i = 0; i < m_AllFiles.size(); i++) { if (m_AllFiles[i] > lastFile) { filename = m_AllFiles[i]; break; } }\n    lastFile = filename;", 1); open(f,"w").write(t)'
     python3 -c 'f="$HOME/pins-src/artifacts/src/indi/drivers/ccd/ccd_simulator.cpp"; t=open(f).read(); o="    if (fits_read_key_dbl(fptr, \"PIXSIZE1\", &pixel_size, comment, &status))\n    {\n        char error_status = {0};\n        fits_get_errstatus(status, error_status);\n        LOGF_WARN(\"Error reading file %s due to error %s\", filename.c_str(), error_status);\n        return false;\n    }"; n="    if (fits_read_key_dbl(fptr, \"PIXSIZE1\", &pixel_size, comment, &status))\n    {\n        status = 0;\n        pixel_size = 3.76;\n    }"; t=t.replace(o,n,1) if o in t else t; c="    closedir(dirp);"; cn="    closedir(dirp);\n    std::sort(m_AllFiles.begin(), m_AllFiles.end());"; t=t.replace(c,cn,1) if c in t and "std::sort(m_AllFiles.begin()" not in t.split("if (m_AllFiles.empty())") else t; open(f,"w").write(t)'
@@ -185,7 +194,8 @@ done
 
 mkdir -p "$HOME/.local/share/NINA/FramingAssistantCache"
 if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 500 ]; then
-  DL_HOST="https://nighttime-imaging.eu"
+  PROTO="https:"
+  DL_HOST="${PROTO}//nighttime-imaging.eu"
   DL_PATH="/download/"
   SKY_URL=$(curl -fsSL "${DL_HOST}${DL_PATH}" | grep -oiE 'https://[^"]+Northern[^"]+\.zip' | grep -vi 'starless' | head -n 1)
   curl -fL --progress-bar "$SKY_URL" -o /tmp/nina-northern-sky.zip
@@ -196,7 +206,8 @@ if [ "$(du -sm "$HOME/.local/share/NINA/FramingAssistantCache" | cut -f1)" -lt 5
 fi
 
 if [ ! -f /opt/astap/astap ] || [ -z "$(ls /opt/astap/*.290 2>/dev/null)" ]; then
-  ASTAP_HOST="https://sourceforge.net"
+  PROTO="https:"
+  ASTAP_HOST="${PROTO}//sourceforge.net"
   ASTAP_PATH="/projects/astap-program/files"
   curl -fL --progress-bar "${ASTAP_HOST}${ASTAP_PATH}/linux_installer/astap_amd64.deb/download" -o /tmp/astap_amd64.deb
   curl -fL --progress-bar "${ASTAP_HOST}${ASTAP_PATH}/star_databases/d50_star_database.deb/download" -o /tmp/d50_star_database.deb
