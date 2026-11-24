@@ -16,7 +16,7 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
   - **Wichtig:** Keinen Wrapper um `indi_simulator_ccd` bauen (führt sonst zu `DRIVER_INFO`-Timeout).
 - **PHD2 Headless & VNC:** Xvfb `:99` mit `matchbox-window-manager -use_titlebar no` + `x11vnc` auf Port `5901` (`1234`); Touch 'N' Stars `GuidingPage-*.js` auf unbeschnittene 4:3-Darstellung gepatcht.
 - **Bild-Speicherpfad (`ImageFilePath`):** Absoluter Pfad `\$HOME/astro-images` im `.profile` (verhindert `System.UriFormatException` in `ImageSaveController`).
-- **Offline-Kataloge & Netzwerk:** Northern Sky Map (`1.4 GB`) in `~/.local/share/NINA/FramingAssistantCache`, ASTAP + D50 unter `/opt/astap/`, Samba-Share `[astro]` (`smb://10.42.0.1/astro`) und 2.4-GHz-Hotspot `pins-T630` (`astro1234`, `wifi-sec.psk` explizit per `nmcli modify` gesetzt).
+- **Offline-Kataloge & Netzwerk:** Northern Sky Map (`1.4 GB`) in `~/.local/share/NINA/FramingAssistantCache`, ASTAP + D50 unter `/opt/astap/`, Samba-Share `[astro]` (mit interaktiver `smbpasswd`-Passwortabfrage am Ende des Setups) (`smb://10.42.0.1/astro`) und 2.4-GHz-Hotspot `pins-T630` (`astro1234`, `wifi-sec.psk` explizit per `nmcli modify` gesetzt).
 
 - **`.NET 10.0.400 SDK`:** Muss exakt Version `10.0.400` sein (über `dotnet/install-scripts` nach `/usr/share/dotnet`), da ältere `10.0.1xx`-Ubuntu-Pakete die Roslyn-Source-Generatoren in `nitr57/pins` nicht ausführen (`CS9248`).
 

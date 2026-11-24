@@ -233,8 +233,9 @@ if ! grep -q "^\[astro\]" /etc/samba/smb.conf 2>/dev/null; then
    directory mask = 0755
 SMB
 fi
-(echo "$HOTSPOT_PASS"; echo "$HOTSPOT_PASS") | sudo smbpasswd -s -a "$USER"
 sudo systemctl enable --now smbd
+echo "Bitte jetzt dein gewuenschtes Samba-Passwort fuer $USER vergeben:"
+sudo smbpasswd -a "$USER" && sudo smbpasswd -e "$USER"
 sudo systemctl restart smbd
 
 echo "=== 12. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
