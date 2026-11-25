@@ -238,17 +238,27 @@ echo "Bitte jetzt dein gewuenschtes Samba-Passwort fuer $USER vergeben:"
 sudo smbpasswd -a "$USER" && sudo smbpasswd -e "$USER"
 sudo systemctl restart smbd
 
-echo "=== 12. Dauer-Hotspot (pins-T630, 10.42.0.1/24, 2.4 GHz Ch 6, Powersave aus) ==="
+echo "=== 12. Netzwerk (Ethernet DHCP + Dauer-Hotspot pins-T630, 10.42.0.1/24) ==="
 sudo apt-get install -y network-manager dnsmasq-base
-printf '[keyfile]\nunmanaged-devices=none\n' | sudo tee /etc/NetworkManager/conf.d/10-globally-managed-devices.conf > /dev/null
+sudo rm -f /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+printf '[keyfile]\nunmanaged-devices=none\n' | sudo tee /etc/NetworkManager/conf.d/99-manage-all.conf > /dev/null
 sudo systemctl enable --now NetworkManager
-sudo systemctl reload NetworkManager
+sudo systemctl restart NetworkManager
+sleep 2
+
+ETH_IF=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="ethernet"{print $1; exit}')
+if [ -n "$ETH_IF" ]; then
+  sudo nmcli device set "$ETH_IF" managed yes
+  nmcli -t -f NAME connection show | grep -qxE "^(wired-dhcp|lan)$" || \
+    sudo nmcli con add type ethernet ifname "$ETH_IF" con-name wired-dhcp autoconnect yes
+  sudo nmcli con up wired-dhcp 2>/dev/null || sudo nmcli con up lan 2>/dev/null || true
+fi
+
+while sudo nmcli con delete pins-hotspot 2>/dev/null; do :; done
 WIFI_IF=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi"{print $1; exit}')
 if [ -n "$WIFI_IF" ]; then
   sudo nmcli device set "$WIFI_IF" managed yes
-  if ! nmcli -t -f NAME connection show | grep -qx "pins-hotspot"; then
-    sudo nmcli con add type wifi ifname "$WIFI_IF" con-name pins-hotspot autoconnect yes ssid "pins-T630"
-  fi
+  sudo nmcli con add type wifi ifname "$WIFI_IF" con-name pins-hotspot autoconnect yes ssid "pins-T630"
   sudo nmcli con modify pins-hotspot \
     802-11-wireless.mode ap \
     802-11-wireless.band bg \
