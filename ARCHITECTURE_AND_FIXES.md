@@ -20,6 +20,8 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
 
 - **`.NET 10.0.400 SDK`:** Muss exakt Version `10.0.400` sein (über `dotnet/install-scripts` nach `/usr/share/dotnet`), da ältere `10.0.1xx`-Ubuntu-Pakete die Roslyn-Source-Generatoren in `nitr57/pins` nicht ausführen (`CS9248`).
 
+- **Hotspot (`pins-T630`, `10.42.0.1/24`):** Installiert `dnsmasq-base`, setzt `unmanaged-devices=none` in `/etc/NetworkManager/conf.d/10-globally-managed-devices.conf` (damit Ubuntu Server `wlp2s0` nach jedem Reboot verwaltet) und aktiviert `pins-hotspot` direkt per `nmcli con up`.
+
 ## 2. Skripte & Dokumentation im Repository
 - `setup-pins-astro.sh`: Vollautomatisches, idempotentes Setup (Schritte 1–12).
 - `restart-astro.sh`: Sauberer Neustart aller Astro-Dienste in Boot-Reihenfolge ohne Reboot.

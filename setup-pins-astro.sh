@@ -238,22 +238,28 @@ echo "Bitte jetzt dein gewuenschtes Samba-Passwort fuer $USER vergeben:"
 sudo smbpasswd -a "$USER" && sudo smbpasswd -e "$USER"
 sudo systemctl restart smbd
 
-echo "=== 12. 2.4 GHz Dauer-Hotspot ($HOTSPOT_SSID) einrichten ==="
-WIFI_DEV=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi" {print $1; exit}')
-if [ -n "$WIFI_DEV" ]; then
-  for conn in $(nmcli -t -f NAME,TYPE connection show | awk -F: '$2=="802-11-wireless" && $1!="Hotspot" {print $1}'); do
-    sudo nmcli connection delete "$conn" || true
-  done
-  if ! nmcli connection show Hotspot >/dev/null 2>&1; then
-    sudo nmcli dev wifi hotspot ifname "$WIFI_DEV" con-name Hotspot ssid "$HOTSPOT_SSID" password "$HOTSPOT_PASS"
+echo "=== 12. Dauer-Hotspot (pins-T630, 10.42.0.1/24, 2.4 GHz Ch 6, Powersave aus) ==="
+sudo apt-get install -y network-manager dnsmasq-base
+printf '[keyfile]\nunmanaged-devices=none\n' | sudo tee /etc/NetworkManager/conf.d/10-globally-managed-devices.conf > /dev/null
+sudo systemctl enable --now NetworkManager
+sudo systemctl reload NetworkManager
+WIFI_IF=$(nmcli -t -f DEVICE,TYPE device | awk -F: '$2=="wifi"{print $1; exit}')
+if [ -n "$WIFI_IF" ]; then
+  sudo nmcli device set "$WIFI_IF" managed yes
+  if ! nmcli -t -f NAME connection show | grep -qx "pins-hotspot"; then
+    sudo nmcli con add type wifi ifname "$WIFI_IF" con-name pins-hotspot autoconnect yes ssid "pins-T630"
   fi
-  sudo nmcli connection modify Hotspot 802-11-wireless.ssid "$HOTSPOT_SSID"
-  sudo nmcli connection modify Hotspot wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$HOTSPOT_PASS"
-  sudo nmcli connection modify Hotspot 802-11-wireless.band bg
-  sudo nmcli connection modify Hotspot 802-11-wireless.channel 6
-  sudo nmcli connection modify Hotspot connection.autoconnect yes
-  sudo nmcli connection modify Hotspot connection.autoconnect-priority 100
-  sudo nmcli connection modify Hotspot 802-11-wireless.powersave 2
+  sudo nmcli con modify pins-hotspot \
+    802-11-wireless.mode ap \
+    802-11-wireless.band bg \
+    802-11-wireless.channel 6 \
+    802-11-wireless.powersave 2 \
+    wifi-sec.key-mgmt wpa-psk \
+    wifi-sec.psk "astro1234" \
+    ipv4.method shared \
+    ipv4.addresses 10.42.0.1/24 \
+    connection.autoconnect yes
+  sudo nmcli con up pins-hotspot || true
 fi
 
 echo "=== Setup abgeschlossen! Bitte einmal 'sudo reboot' ausfuehren. ==="
