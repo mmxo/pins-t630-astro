@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import html, subprocess, urllib.parse
-from http.server import BaseHTTPRequestHandler, ThreadingThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 def run(cmd):
     try:
@@ -62,4 +62,4 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(page.encode())
     def log_message(self, *a): pass
 
-ThreadingThreadingHTTPServer(("0.0.0.0", 8624), Handler).serve_forever()
+ThreadingHTTPServer(("0.0.0.0", 8624), Handler).serve_forever()
