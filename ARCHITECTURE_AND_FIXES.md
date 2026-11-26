@@ -22,6 +22,8 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
 
 - **Hotspot (`pins-T630`, `10.42.0.1/24`):** Installiert `dnsmasq-base`, setzt `unmanaged-devices=none` in `/etc/NetworkManager/conf.d/99-manage-all.conf (dynamisches Ethernet DHCP + Duplikat-Bereinigung fuer pins-hotspot)` (damit Ubuntu Server `wlp2s0` nach jedem Reboot verwaltet) und aktiviert `pins-hotspot` direkt per `nmcli con up`.
 
+- **CCD Simulator Binary (`/usr/bin/indi_simulator_ccd`):** Das kompilierte, gepatchte `indi_simulator_ccd` (`3008x3008`, `3.76 um`, `~/test-fits`, `Use Dir.`) wird explizit nach `/usr/bin/indi_simulator_ccd` installiert, damit N.I.N.A. nicht das unveraenderte `indi-bin`-Paketbinary laedt.
+
 ## 2. Skripte & Dokumentation im Repository
 - `setup-pins-astro.sh`: Vollautomatisches, idempotentes Setup (Schritte 1–12).
 - `restart-astro.sh`: Sauberer Neustart aller Astro-Dienste in Boot-Reihenfolge ohne Reboot.

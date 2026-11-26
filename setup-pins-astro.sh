@@ -110,6 +110,8 @@ if [ -f "$CCD_SIM_CPP" ]; then
   sudo cp -f "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
 fi
 
+sudo install -m 755 "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
+
 echo "=== 8. libXISF-Trennung, indiserver-Wrapper, MyFocuserPro2 & Test-FITS ==="
 ls /usr/local/lib/libXISF* >/dev/null 2>&1 && sudo mv -f /usr/local/lib/libXISF* "$HOME/pins/" && sudo ldconfig
 ls "$HOME/pins-src/artifacts/src/libxisf/build"/libXISF.so* >/dev/null 2>&1 && cp -f "$HOME/pins-src/artifacts/src/libxisf/build"/libXISF.so* "$HOME/pins/"
