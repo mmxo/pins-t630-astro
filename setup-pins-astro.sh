@@ -139,6 +139,9 @@ sudo cp -f "$REPO_DIR/configs/indi-web-panel.py" /usr/local/bin/indi-web-panel.p
 sudo sed "s/^User=.*/User=$USER/" "$REPO_DIR/systemd/indi-panel.service" | sudo tee /etc/systemd/system/indi-panel.service > /dev/null
 sudo systemctl daemon-reload && sudo systemctl enable --now indi-panel.service
 
+mkdir -p "$HOME/.config" "$HOME/Documents"
+printf 'XDG_DOCUMENTS_DIR="$HOME"\n' > "$HOME/.config/user-dirs.dirs"
+
 echo "=== 9. Systemd-Dienste (PHD2 Headless + randloses VNC & PINS) ==="
 sudo systemctl disable --now sysupdate-api.service 2>/dev/null || true
 sudo apt-mark hold pins indi-bin
