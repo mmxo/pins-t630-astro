@@ -133,6 +133,12 @@ cp -rf "$SCRIPT_DIR/test-fits/"* "$HOME/test-fits/" 2>/dev/null || true
 [ -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" ] && cp -f "$SCRIPT_DIR/configs/PHDGuidingV2.conf" "$HOME/.PHDGuidingV2"
 cp -f "$SCRIPT_DIR/configs/"*.xml "$HOME/.indi/" 2>/dev/null || true
 
+mkdir -p "$HOME/.indi"
+cp -f "$REPO_DIR/configs/indi/"*.xml "$HOME/.indi/" 2>/dev/null || true
+sudo cp -f "$REPO_DIR/configs/indi-web-panel.py" /usr/local/bin/indi-web-panel.py && sudo chmod +x /usr/local/bin/indi-web-panel.py
+sudo sed "s/^User=.*/User=$USER/" "$REPO_DIR/systemd/indi-panel.service" | sudo tee /etc/systemd/system/indi-panel.service > /dev/null
+sudo systemctl daemon-reload && sudo systemctl enable --now indi-panel.service
+
 echo "=== 9. Systemd-Dienste (PHD2 Headless + randloses VNC & PINS) ==="
 sudo systemctl disable --now sysupdate-api.service 2>/dev/null || true
 sudo apt-mark hold pins indi-bin
