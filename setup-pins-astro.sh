@@ -83,7 +83,10 @@ git clone --depth 1 --branch "${OCS_VER}" "${P}${H}/shimat/opencvsharp.git" /tmp
   git clone --depth 1 "https:"'//://github.com' /tmp/opencvsharp-src
 cmake -S /tmp/opencvsharp-src/src -B /tmp/build-ocs -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build /tmp/build-ocs -j"$(nproc)"
-cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/"
+cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/OpenCvSharpExtern.so"
+mkdir -p "$HOME/pins/External/linux-x64"
+cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/External/linux-x64/libOpenCvSharpExtern.so"
+cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/libOpenCvSharpExtern.so" 
 rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 find "$HOME/pins/External/linux-x64" -type f -name "*.so*" -exec ln -sf {} "$HOME/pins/" \;
 
