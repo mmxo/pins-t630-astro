@@ -251,6 +251,10 @@ echo "Bitte jetzt dein gewuenschtes Samba-Passwort fuer $USER vergeben:"
 sudo smbpasswd -a "$USER" && sudo smbpasswd -e "$USER"
 sudo systemctl restart smbd
 
+sudo systemctl disable --now apt-daily.timer apt-daily-upgrade.timer unattended-upgrades.service 2>/dev/null || true
+sudo mkdir -p /etc/needrestart/conf.d
+printf '$nrconf{restart} = "l";\n' | sudo tee /etc/needrestart/conf.d/99-no-auto-restart.conf > /dev/null
+
 echo "=== 12. Netzwerk (Ethernet DHCP + Dauer-Hotspot pins-T630, 10.42.0.1/24) ==="
 sudo apt-get install -y network-manager dnsmasq-base
 sudo rm -f /etc/NetworkManager/conf.d/10-globally-managed-devices.conf

@@ -26,6 +26,8 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
 
 - **Touch 'N' Stars FITS-Dateibrowser (`~/.config/user-dirs.dirs`):** Setzt `XDG_DOCUMENTS_DIR="$HOME"`, damit .NET (`SpecialFolder.MyDocuments`) auf Ubuntu Server nicht `""` zurueckgibt und `FilesystemController.Browse()` ohne `Parameter 'path'`-Fehler startet.
 
+- **Astro-Session-Schutz (`99-no-auto-restart.conf` ## 2. Skripte deaktivierte `apt-daily`-Timer):** Verhindert, dass Ubuntu morgens um ~06:41 Uhr ueber `unattended-upgrades`/`needrestart` laufende Astro-Dienste (`pins`, `phd2`, VNC) mitten in einer Session neu startet.
+
 ## 2. Skripte & Dokumentation im Repository
 - `setup-pins-astro.sh`: Vollautomatisches, idempotentes Setup (Schritte 1–12).
 - `restart-astro.sh`: Sauberer Neustart aller Astro-Dienste in Boot-Reihenfolge ohne Reboot.
