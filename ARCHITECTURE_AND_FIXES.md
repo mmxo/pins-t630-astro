@@ -26,7 +26,11 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
 
 - **Touch 'N' Stars FITS-Dateibrowser (`~/.config/user-dirs.dirs`):** Setzt `XDG_DOCUMENTS_DIR="$HOME"`, damit .NET (`SpecialFolder.MyDocuments`) auf Ubuntu Server nicht `""` zurueckgibt und `FilesystemController.Browse()` ohne `Parameter 'path'`-Fehler startet.
 
-- **Astro-Session-Schutz (`99-no-auto-restart.conf` ## 2. Skripte deaktivierte `apt-daily`-Timer):** Verhindert, dass Ubuntu morgens um ~06:41 Uhr ueber `unattended-upgrades`/`needrestart` laufende Astro-Dienste (`pins`, `phd2`, VNC) mitten in einer Session neu startet.
+- **Astro-Session-Schutz (`99-no-auto-restart.conf` - **Touch 'N' Stars VNC-Defaultport (`5901`):** Ersetzt in `vnc-remote-*.js` den Standardport `6080` durch `5901` (PHD2 `x11vnc`), damit bei Tab-Wechseln immer `5901` vorbelegt bleibt.
+
+## 2. Skripte deaktivierte `apt-daily`-Timer):** Verhindert, dass Ubuntu morgens um ~06:41 Uhr ueber `unattended-upgrades`/`needrestart` laufende Astro-Dienste (`pins`, `phd2`, VNC) mitten in einer Session neu startet.
+
+- **Touch 'N' Stars VNC-Defaultport (`5901`):** Ersetzt in `vnc-remote-*.js` den Standardport `6080` durch `5901` (PHD2 `x11vnc`), damit bei Tab-Wechseln immer `5901` vorbelegt bleibt.
 
 ## 2. Skripte & Dokumentation im Repository
 - `setup-pins-astro.sh`: Vollautomatisches, idempotentes Setup (Schritte 1–12).

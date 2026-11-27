@@ -142,6 +142,8 @@ sudo systemctl daemon-reload && sudo systemctl enable --now indi-panel.service
 mkdir -p "$HOME/.config" "$HOME/Documents"
 printf 'XDG_DOCUMENTS_DIR="$HOME"\n' > "$HOME/.config/user-dirs.dirs"
 
+find "$HOME/.local/share/NINA/Plugins" -name "vnc-remote-*.js" -exec sed -i 's/`6080`/`5901`/g' {} +
+
 echo "=== 9. Systemd-Dienste (PHD2 Headless + randloses VNC & PINS) ==="
 sudo systemctl disable --now sysupdate-api.service 2>/dev/null || true
 sudo apt-mark hold pins indi-bin
