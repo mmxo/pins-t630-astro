@@ -78,8 +78,8 @@ OCS_VER=$(find "$HOME/.nuget/packages/opencvsharp4" -maxdepth 1 -mindepth 1 -pri
 rm -rf /tmp/opencvsharp-src /tmp/build-ocs
 P=$(printf 'http%s' 's:')
 H=$(printf '//github%s' '.com')
-git clone --depth 1 --branch "${OCS_VER}" "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src 2>/dev/null || \
-  git clone --depth 1 "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src 2>/dev/null || \
+git clone --depth 1 --branch "${OCS_VER}" "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src
+  git clone --depth 1 "${P}${H}/shimat/opencvsharp.git" /tmp/opencvsharp-src
 cmake -S /tmp/opencvsharp-src/src -B /tmp/build-ocs -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build /tmp/build-ocs -j"$(nproc)"
 cp -f /tmp/build-ocs/OpenCvSharpExtern/libOpenCvSharpExtern.so "$HOME/pins/OpenCvSharpExtern.so"
