@@ -191,6 +191,11 @@ sudo chmod 0440 /etc/sudoers.d/pins-power
 sudo systemctl daemon-reload
 sudo systemctl enable --now phd2.service x11vnc-phd2.service pins.service
 
+sudo apt-get install -y xterm
+sudo sed "s/^User=.*/User=$USER/" "$REPO_DIR/systemd/term-vnc.service" | sudo tee /etc/systemd/system/term-vnc.service > /dev/null
+sudo systemctl daemon-reload
+sudo systemctl enable --now term-vnc.service
+
 echo "=== 10. Touch 'N' Stars 4:3 PHD2-Patch, Bildpfad & Offline-Kataloge ==="
 python3 -c '
 import glob, os

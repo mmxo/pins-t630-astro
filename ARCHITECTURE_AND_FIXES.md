@@ -28,9 +28,13 @@ Diese Datei dokumentiert den geprüften, archivierten Endstand (`v1.0-stable`) u
 
 - **Astro-Session-Schutz (`99-no-auto-restart.conf` - **Touch 'N' Stars VNC-Defaultport (`5901`):** Ersetzt in `vnc-remote-*.js` den Standardport `6080` durch `5901` (PHD2 `x11vnc`), damit bei Tab-Wechseln immer `5901` vorbelegt bleibt.
 
+- **Terminal-VNC (`term-vnc.service`, Port `5902`):** Startet eine kopflose `Xvfb :2` + `xterm`-Shell per `x11vnc` auf Port `5902` (Passwort `1234`), direkt ueber den Touch 'N' Stars VNC-Tab nutzbar.
+
 ## 2. Skripte deaktivierte `apt-daily`-Timer):** Verhindert, dass Ubuntu morgens um ~06:41 Uhr ueber `unattended-upgrades`/`needrestart` laufende Astro-Dienste (`pins`, `phd2`, VNC) mitten in einer Session neu startet.
 
 - **Touch 'N' Stars VNC-Defaultport (`5901`):** Ersetzt in `vnc-remote-*.js` den Standardport `6080` durch `5901` (PHD2 `x11vnc`), damit bei Tab-Wechseln immer `5901` vorbelegt bleibt.
+
+- **Terminal-VNC (`term-vnc.service`, Port `5902`):** Startet eine kopflose `Xvfb :2` + `xterm`-Shell per `x11vnc` auf Port `5902` (Passwort `1234`), direkt ueber den Touch 'N' Stars VNC-Tab nutzbar.
 
 ## 2. Skripte & Dokumentation im Repository
 - `setup-pins-astro.sh`: Vollautomatisches, idempotentes Setup (Schritte 1–12).

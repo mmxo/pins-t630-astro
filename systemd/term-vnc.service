@@ -1,0 +1,14 @@
+[Unit]
+Description=Headless Terminal Session via VNC (Port 5902)
+After=network.target
+
+[Service]
+Type=simple
+User=hase
+Environment=DISPLAY=:2
+ExecStart=/bin/bash -c 'Xvfb :2 -screen 0 1280x800x24 -ac & sleep 2; xterm -geometry 150x42+0+0 -fa "Monospace" -fs 13 -bg black -fg white & exec x11vnc -display :2 -rfbport 5902 -passwd 1234 -forever -shared -noxdamage'
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
