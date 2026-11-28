@@ -214,6 +214,15 @@ for p in glob.glob(os.path.expanduser("~/.local/share/NINA/Plugins/*/Touch-N-Sta
         open(p, "w").write(s.replace(old, new, 1))
 '
 
+python3 -c '
+import glob, os
+for f in glob.glob(os.path.expanduser("~/.local/share/NINA/Plugins/*/Touch-N-Stars/app/assets/GuidingPage-*.js")):
+    t = open(f).read()
+    t = t.replace("{top:`80px`,height:`calc(100% - 80px)`}:{top:`0`,height:`100%`}", "{top:`80px`,height:`calc(100% - 80px - var(--above-statusbar, 0px) - var(--status-panel-height, 260px) - 1rem)`}:{top:`0`,height:`calc(100% - var(--status-panel-height, 240px) - 1rem)`}")
+    t = t.replace("Math.min(vo,Math.max(yo,t/2))", "Math.min(vo,Math.max(yo,Math.min(t/2,(c.value.height-370)/.75)))")
+    open(f, "w").write(t)
+'
+
 mkdir -p "$HOME/astro-images"
 for i in $(seq 1 15); do
   ls "$HOME/.local/share/NINA/Profiles"/*.profile >/dev/null 2>&1 && break
