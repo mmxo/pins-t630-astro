@@ -34,3 +34,6 @@ cp -r ~/pins-t630-astro/test-fits ~/ && cp ~/pins-t630-astro/prepare-test-fits.s
    - **WLAN-Hotspot:** `pins-T630`
    - **Touch 'N' Stars Web-UI:** `http://10.42.0.1:5000`
    - **PHD2 VNC (AnyPane):** `10.42.0.1:5901` (Passwort: `1234`)
+
+## Nach SSD-Umzug auf den HP t630
+- Einmalig ausfuehren: `~/pins-t630-astro/fix-network-hp630.sh`
