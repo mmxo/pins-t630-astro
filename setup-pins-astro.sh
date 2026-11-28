@@ -204,14 +204,14 @@ sudo install -m 755 "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_si
 
 echo "=== 10. Touch 'N' Stars 4:3 PHD2-Patch, Bildpfad & Offline-Kataloge ==="
 python3 -c '
-import glob, os
-old = "S=i(()=>u.value?{top:`80px`,height:`calc(100% - 80px)`}:{top:`0`,height:`100%`})"
-new = "S=i(()=>u.value?{top:`80px`,height:`calc(100% - 80px - var(--above-statusbar, 0px) - var(--status-panel-height, 260px) - 1rem)`}:{top:`0`,height:`calc(100% - var(--status-panel-height, 240px) - 1rem)`})"
+import glob, os, re
+pat = re.compile(r"(\w+=\w+\(\)=>\w+\.value\?\{top:`80px`,height:)`calc\(100% - 80px\)`(\}:\{top:`0`,height:)`100%`(\})")
+rep = r"\1`calc(100% - 80px - var(--above-statusbar, 0px) - var(--status-panel-height, 260px) - 1rem)`\2`calc(100% - var(--status-panel-height, 240px) - 1rem)`\3"
 for p in glob.glob(os.path.expanduser("~/.local/share/NINA/Plugins/*/Touch-N-Stars/app/assets/GuidingPage-*.js")):
     s = open(p).read()
-    if old in s:
+    if pat.search(s):
         open(p + ".bak", "w").write(s)
-        open(p, "w").write(s.replace(old, new, 1))
+        open(p, "w").write(pat.sub(rep, s, count=1))
 '
 
 mkdir -p "$HOME/astro-images"
