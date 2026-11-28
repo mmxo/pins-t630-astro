@@ -196,6 +196,9 @@ sudo sed "s/^User=.*/User=$USER/" "$REPO_DIR/systemd/term-vnc.service" | sudo te
 sudo systemctl daemon-reload
 sudo systemctl enable --now term-vnc.service
 
+sudo dpkg-divert --local --rename --add /usr/bin/indi_simulator_ccd 2>/dev/null || true
+sudo install -m 755 "$HOME/pins-src/artifacts/src/indi/build/drivers/ccd/indi_simulator_ccd" /usr/bin/indi_simulator_ccd
+
 echo "=== 10. Touch 'N' Stars 4:3 PHD2-Patch, Bildpfad & Offline-Kataloge ==="
 python3 -c '
 import glob, os
